@@ -3,117 +3,65 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\{Redirect, Session};
 use Validator;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Repositories\BookRepository;
-use App\Book;
 
 
 class BookController extends Controller
 {
+
     protected $books;
 
-    /**
-     * BookController constructor.
-     * @param BookRepository $books
-     */
+
     public function __construct(BookRepository $books)
     {
         $this->books = $books;
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function index(Request $request)
+    public function index()
     {
-        $books = $this->books->indexBooks()->paginate(10);
+        $books = $this->books->paginate(15);
         return response()->json($books);
     }
 
-
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function store(Request $request)
-    {
-        $rules = ['genre'  => 'required|alpha',
-                  'author' => 'required|alpha',
-                  'title'  => 'required',
-                  'year'   => 'required|numeric',];
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails())
-            return response()->json($validator->messages(), 406);
-
-        $book = new Book();
-        $book->genre = $request->get('genre');
-        $book->title = $request->get('title');
-        $book->author = $request->get('author');
-        $book->year = $request->get('year');
-        $book->save();
-
-        return response()->json($book, 201);
-
-    }
-
-    /**
-     * @param $id
-     * @return mixed
-     */
     public function show($id)
     {
-        $user = null;
-        $book = Book::findOrFail($id);
+        $book = $this->books->get($id);
         return response()->json($book);
     }
 
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return mixed
-     */
-    public function update(Request $request, $id)
+    public function store(Request $request)
     {
-        $book = Book::findOrFail($id);
-
-        $rules = ['genre'  => 'required|alpha',
-                  'author' => 'required|alpha',
-                  'title'  => 'required',
-                  'year'   => 'required|numeric',];
-
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $this->books->getRules());
 
         if ($validator->fails())
             return response()->json($validator->messages(), 406);
 
-        $book->genre = $request->genre;
-        $book->title = $request->title;
-        $book->author = $request->author;
-        $book->year = $request->year;
-
-        $book->save();
-
-        return response()->json($book);
+        $book = $this->books->add($request->all());
+            return response()->json($book, 201);
     }
 
-    /**
-     * @param $id
-     * @return mixed
-     */
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(), $this->books->getRules());
+
+        if ($validator->fails())
+            return response()->json($validator->messages(), 406);
+
+        if ($this->books->update($request->all(), 'id', $id))
+            return response()->json($this->books->get($id));
+    }
+
     public function destroy($id)
     {
-        $book = Book::findOrFail($id);
-
-        $book->delete();
-        return response()->json(['message'=>'Record deleted'], 204);
+        if ($this->books->isCharged($id))
+            return response()->json(['message' => 'Can not delete. Book ID' . $id . ' is charged'], 406);
+        else  {
+             $this->books->delete($id);
+             return response()->json(['message' => 'Record deleted'], 204);
+        }
     }
 
 }

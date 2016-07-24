@@ -4,8 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use DB;
-use Auth;
+
 
 class User extends Authenticatable
 {
@@ -27,41 +26,35 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    protected $createRules = ['firstname' => 'required|alpha',
+        'lastname' => 'required|alpha',
+        'email' => 'required|email|unique:users',
+        'password' => 'required',
+        'role' => 'required'];
 
-   // public function lends()
-   // {
-   //     return $this->hasMany('App\Lend');
-   // }
+    protected $updateRules = ['firstname' => 'required|alpha',
+        'lastname' => 'required|alpha',
+        'email' => 'required|email'];
+
 
     public function books()
     {
-        return $this->belongsToMany('App\Book', 'lends')->withPivot('date_getin_plan','date_getin_fact')
-                     ->withTimestamps();
+        return $this->belongsToMany('App\Book', 'lends')
+            ->withPivot('date_getin_plan', 'date_getin_fact')
+            ->withTimestamps();
     }
 
-    
-    
-    
-    
-    
-    public function isAdmin()
+
+    public static function getCreateRules()
     {
-        return $this->role =='admin';
+        $_this = new self;
+        return $_this->createRules;
     }
 
-    public function isReader()
+    public static function getUpdateRules()
     {
-        return $this->role =='reader';
-    }
-
-    public function isOwner($id)
-    {
-        return \Auth::id() == $id->id;
-    }
-
-    public static function getReaders()
-    {
-        return User::where('role', '=', 'reader')->select('id', 'firstname', 'lastname')->get();
+        $_this = new self;
+        return $_this->updateRules;
     }
 
 }

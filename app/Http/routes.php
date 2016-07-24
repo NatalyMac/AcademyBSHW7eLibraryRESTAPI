@@ -12,16 +12,8 @@
 */
 
 
-Route::get('/', 'HomeController@index');
-//Route::auth();
-
-//Route::get('/auth/{provider}', 'Auth\AuthController@redirectToProvider');
-//Route::get('/auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
-
-
 Route::resource('api/users', 'UserController');
 Route::resource('api/books', 'BookController');
 
-//Route::resource('api/books.users', 'LendController' , ['only'=>['create', 'store', 'update']]);
-Route::resource('api/users.books', 'LendController');
+Route::resource('api/users.books', 'LendController', ['only'=>['index', 'update', 'destroy']]);
 

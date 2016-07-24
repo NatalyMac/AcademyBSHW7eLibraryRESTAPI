@@ -3,125 +3,63 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\Support\Facades\{Redirect, Session};
 
 use Validator;
 
 use App\Repositories\UserRepository;
-use App\Http\Requests;
-use App\User;
 
 
 class UserController extends Controller
 {
+
     protected $users;
 
-    /**
-     * UserController constructor.
-     * @param UserRepository $users
-     */
+
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
     }
 
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function index(Request $request)
+    public function index()
     {
-        $users = $this->users->all()->paginate(10);
-
-        return response()->json($users);
+        $users = $this->users->paginate(15);
+            return response()->json($users);
     }
 
-
-    /**
-     * @param Request $request
-     * @return mixed
-     */
-    public function store(Request $request)
-    {
-        
-        $rules = ['firstname' => 'required|alpha',
-            'lastname'  => 'required|alpha',
-            'email'     => 'required|email|unique:users',
-            'password'  => 'required',
-            'role'      => 'required'];
-
-
-        $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->fails())
-            return response()->json($validator->messages(), 406);
-       
-        $user = new User();
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
-        $user->password =  bcrypt($request->password);
-        $user->role = $request->role;
-
-        $user->save();
-
-        return response()->json($user, 201);
-    }
-
-    /**
-     * @param $id
-     * @param Request $request
-     * @return mixed
-     */
-   
     public function show($id)
     {
-        $user = User::findOrFail($id);
-
-        return response()->json($user);
+        $user =  $this->users->get($id);
+            return response()->json($user);
     }
 
-
-    /**
-     * @param Request $request
-     * @param $id
-     * @return mixed
-     */
-    public function update(Request $request, $id)
+    public function store(Request $request)
     {
-        $user = User::findOrFail($id);
-
-
-        $rules = ['firstname' => 'required|alpha',
-                  'lastname'  => 'required|alpha',
-                  'email'     => 'required|email'];
-
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $this->users->getCreateRules());
 
         if ($validator->fails())
             return response()->json($validator->messages(), 406);
 
-        $user->firstname = $request->firstname;
-        $user->lastname = $request->lastname;
-        $user->email = $request->email;
-        $user->role = $request->role;
-
-        $user->save();
-
-        return response()->json($user);
+        $user = $this->users->add($request->all());
+             return response()->json($user, 201);
     }
 
-    /**
-     * @param $id
-     * @return mixed
-     */
+    public function update(Request $request, $id)
+    {
+        $validator = Validator::make($request->all(),  $this->users->getUpdateRules());
+
+        if ($validator->fails())
+            return response()->json($validator->messages(), 406);
+
+        if ($this->users->update($request->all(), 'id', $id))
+            return response()->json($this->users->get($id));
+    }
     
     public function destroy($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
-
-        return response()->json(['message'=>'Record deleted'], 204);
+        if (!$this->users->isBookHolder($id)) {
+            $this->users->delete($id);
+            return response()->json(['message'=>'Record deleted'], 204);
+        } else
+            return response()->json(['message'=>'Can not delete, User ID'.$id.'holds books'], 406);
     }
 }

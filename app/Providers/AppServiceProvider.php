@@ -23,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(
+            'Repositories\Contracts\ApiRepoInterface',
+            'Repositories\UserRepository', 'Repositories\BookRepository',
+            'Repositories\AbstractRepository'
+        );
     }
 }
