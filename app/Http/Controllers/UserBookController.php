@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\UserRepository;
 
 
-class LendController extends Controller
+class UserBookController extends Controller
 {
     /**
      * LendController constructor.
@@ -38,8 +38,7 @@ class LendController extends Controller
 
         if ($charged_book)
             return response()->json($charged_book);
-        else return  response()->json(['message'=>"This book ID".$book_id." has been charged "], 406);
-
+        else return  response()->json(['message'=>"This book ID".$book_id." has been charged "], 400);
     }
 
     /**
@@ -51,6 +50,7 @@ class LendController extends Controller
     {
         $result = $this->users->unsetUserBook($user_id, $book_id);
         if ($result) return response()->json(['message'=>'Book ID'.$book_id.' is discharged'], 200);
-           else return response()->json(['message'=>'Book ID'. $book_id. ' is not charged by user ID'.$user_id], 406);
+           else return response()->json(['message'=>'Book ID'. $book_id.
+                                         ' is not charged by user ID'.$user_id], 400);
     }
 }

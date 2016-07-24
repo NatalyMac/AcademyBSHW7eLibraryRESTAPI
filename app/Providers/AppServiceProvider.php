@@ -25,7 +25,8 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             'Repositories\Contracts\ApiRepoInterface',
-            'Repositories\UserRepository', 'Repositories\BookRepository',
+            'Repositories\UserRepository',
+            'Repositories\BookRepository',
             'Repositories\AbstractRepository'
         );
     }

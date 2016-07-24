@@ -15,5 +15,5 @@
 Route::resource('api/users', 'UserController');
 Route::resource('api/books', 'BookController');
 
-Route::resource('api/users.books', 'LendController', ['only'=>['index', 'update', 'destroy']]);
+Route::resource('api/users.books', 'UserBookController', ['only'=>['index', 'update', 'destroy']]);
 

@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
         $this->call('BookSeeder');
         $this->call('UserSeeder');
-        $this->call('LendSeeder');
+        $this->call('UserBookSeeder');
     }
 }

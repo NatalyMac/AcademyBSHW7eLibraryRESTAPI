@@ -7,17 +7,17 @@
  */
 
 use Illuminate\Database\Seeder;
-use App\Lend as Lend;
+use App\UserBook as UserBook;
 use App\User as User;
 use App\Book as Book;
 
-class LendSeeder extends Seeder {
+class UserBookSeeder extends Seeder {
 
     public function run()
     {
-        DB::table('lends')->delete();
+        DB::table('user_books')->delete();
 
-        factory(Lend::class, 10)->create();
+        factory(UserBook::class, 10)->create();
 
         for ($i=1; $i<=10; $i++)
 
@@ -29,7 +29,7 @@ class LendSeeder extends Seeder {
             {
                 $user_id =  User::all()->random(1)->id;
 
-                $lend = new Lend();
+                $lend = new UserBook();
                 $lend->user_id = $user_id;
                 $lend->book_id = $book_id;
                 $lend->date_getin_plan = date ('Y:m:d H:m:s', (time()+60000));
@@ -40,8 +40,6 @@ class LendSeeder extends Seeder {
             };
           
         }
-        
-
     }
 
 }

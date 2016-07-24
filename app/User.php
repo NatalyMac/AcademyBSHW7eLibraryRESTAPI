@@ -37,9 +37,12 @@ class User extends Authenticatable
         'email' => 'required|email'];
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function books()
     {
-        return $this->belongsToMany('App\Book', 'lends')
+        return $this->belongsToMany('App\Book', 'user_books')
             ->withPivot('date_getin_plan', 'date_getin_fact')
             ->withTimestamps();
     }

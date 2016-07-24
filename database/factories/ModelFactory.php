@@ -34,7 +34,7 @@ $factory->define(App\Book::class, function (Faker\Generator $faker) {
 });
 
 
-$factory->define(App\Lend::class, function (Faker\Generator $faker) {
+$factory->define(App\UserBook::class, function (Faker\Generator $faker) {
     return [
         'date_getin_plan' => date ('Y:m:d H:m:s', (time()+60000)),
         'date_getin_fact' => date ('Y:m:d H:m:s', (time()+120000)),

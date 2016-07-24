@@ -29,7 +29,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = $this->books->paginate(15);
+        $books = $this->books->paginate(10);
+        //$books = $this->books->all();
         return response()->json($books);
     }
 
@@ -81,7 +82,7 @@ class BookController extends Controller
     public function destroy($id)
     {
         if ($this->books->isCharged($id))
-            return response()->json(['message' => 'Can not delete. Book ID' . $id . ' is charged'], 406);
+            return response()->json(['message' => 'Can not delete. Book ID' . $id . ' is charged'], 400);
         else  {
              $this->books->delete($id);
              return response()->json(['message' => 'Record deleted'], 204);

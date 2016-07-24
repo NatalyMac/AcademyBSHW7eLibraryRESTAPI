@@ -29,7 +29,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->users->paginate(15);
+        $users = $this->users->paginate(10);
+       // $users = $this->users->all();
             return response()->json($users);
     }
 
@@ -84,6 +85,6 @@ class UserController extends Controller
             $this->users->delete($id);
             return response()->json(['message'=>'Record deleted'], 204);
         } else
-            return response()->json(['message'=>'Can not delete, User ID'.$id.'holds books'], 406);
+            return response()->json(['message'=>'Can not delete, User ID'.$id.'holds books'], 400);
     }
 }

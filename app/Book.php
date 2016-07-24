@@ -18,34 +18,32 @@ class Book extends Model
 
 
     /**
-     * @return bool
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function users()
     {
-        return $this->belongsToMany('App\User', 'lends')>withPivot('date_getin_plan','date_getin_fact')
+        return $this->belongsToMany('App\User', 'user_books')
+            ->withPivot('date_getin_plan','date_getin_fact')
             ->withTimestamps();
     }
 
+
     /**
-     * @return mixed
+     * @return bool
      */
     public function isCharged()
     {
         return $this->is_charged;
     }
 
-    /**
-     *
-     */
+
     public function setBookCharged()
     {
         $this->is_charged = true;
         $this->save();
     }
 
-    /**
-     *
-     */
+
     public function setBookDisCharged()
     {
         $this->is_charged = false;
