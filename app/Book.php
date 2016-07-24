@@ -15,31 +15,46 @@ class Book extends Model
                         'author' => 'required|alpha',
                          'title'  => 'required',
                          'year'   => 'required|numeric',];
-        
-    
+
+
+    /**
+     * @return bool
+     */
     public function users()
     {
         return $this->belongsToMany('App\User', 'lends')>withPivot('date_getin_plan','date_getin_fact')
             ->withTimestamps();
     }
-    
+
+    /**
+     * @return mixed
+     */
     public function isCharged()
     {
         return $this->is_charged;
     }
 
+    /**
+     *
+     */
     public function setBookCharged()
     {
         $this->is_charged = true;
         $this->save();
     }
 
+    /**
+     *
+     */
     public function setBookDisCharged()
     {
         $this->is_charged = false;
         $this->save();
     }
-    
+
+    /**
+     * @return array
+     */
     public static function getRules()
     {
         $_this = new self;

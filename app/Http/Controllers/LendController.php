@@ -7,11 +7,19 @@ use App\Repositories\UserRepository;
 
 class LendController extends Controller
 {
+    /**
+     * LendController constructor.
+     * @param UserRepository $users
+     */
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
     }
 
+    /**
+     * @param $user_id
+     * @return mixed
+     */
     public function index($user_id)
     {
         $chargedBooks = $this->users->getUserChargedBook($user_id);
@@ -19,6 +27,11 @@ class LendController extends Controller
         return response()->json($chargedBooks);
     }
 
+    /**
+     * @param $user_id
+     * @param $book_id
+     * @return mixed
+     */
     public function update($user_id, $book_id)
     {
         $charged_book = $this->users->setUserBook($user_id, $book_id);
@@ -29,6 +42,11 @@ class LendController extends Controller
 
     }
 
+    /**
+     * @param $user_id
+     * @param $book_id
+     * @return mixed
+     */
     public function destroy($user_id, $book_id)
     {
         $result = $this->users->unsetUserBook($user_id, $book_id);

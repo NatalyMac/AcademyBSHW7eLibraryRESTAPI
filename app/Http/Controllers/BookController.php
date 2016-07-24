@@ -15,23 +15,38 @@ class BookController extends Controller
     protected $books;
 
 
+    /**
+     * BookController constructor.
+     * @param BookRepository $books
+     */
     public function __construct(BookRepository $books)
     {
         $this->books = $books;
     }
 
+    /**
+     * @return mixed
+     */
     public function index()
     {
         $books = $this->books->paginate(15);
         return response()->json($books);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function show($id)
     {
         $book = $this->books->get($id);
         return response()->json($book);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), $this->books->getRules());
@@ -43,6 +58,11 @@ class BookController extends Controller
             return response()->json($book, 201);
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(), $this->books->getRules());
@@ -54,6 +74,10 @@ class BookController extends Controller
             return response()->json($this->books->get($id));
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function destroy($id)
     {
         if ($this->books->isCharged($id))

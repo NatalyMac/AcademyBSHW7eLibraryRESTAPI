@@ -12,13 +12,22 @@ class UserRepository extends AbstractRepository
     {
         return 'App\User';
     }
-    
+
+    /**
+     * @param $user_id
+     * @return mixed
+     */
     public function getUserChargedBook($user_id)
     {
         $user = User::findorFail($user_id);
             return $user->books()->wherePivot('date_getin_fact', null)->get();
     }
 
+    /**
+     * @param $user_id
+     * @param $book_id
+     * @return null
+     */
     public function setUserBook($user_id, $book_id)
     {
         $user = User::findorFail($user_id);
@@ -37,6 +46,11 @@ class UserRepository extends AbstractRepository
         } else return null;
     }
 
+    /**
+     * @param $user_id
+     * @param $book_id
+     * @return int
+     */
     public function unsetUserBook($user_id, $book_id)
     {
         $user = User::findorFail($user_id);
@@ -54,24 +68,38 @@ class UserRepository extends AbstractRepository
         
         return $result;
     }
-    
+
+    /**
+     * @param $user_id
+     * @return mixed
+     */
     public function getUserBookHistory($user_id)
     {
         $user = User::findorFail($user_id);
         return $user->books;
     }
 
+    /**
+     * @param $user_id
+     * @return mixed
+     */
     public function isBookHolder($user_id)
     {
         $user = User::findorFail($user_id);
         return $user->books()->wherePivot('date_getin_fact', null)->get();
     }
 
+    /**
+     * @return array
+     */
     public function getCreateRules()
     {
         return User::getCreateRules();
     }
 
+    /**
+     * @return array
+     */
     public function getUpdateRules()
     {
         return User::getUpdateRules();

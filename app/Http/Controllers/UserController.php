@@ -15,23 +15,38 @@ class UserController extends Controller
     protected $users;
 
 
+    /**
+     * UserController constructor.
+     * @param UserRepository $users
+     */
     public function __construct(UserRepository $users)
     {
         $this->users = $users;
     }
 
+    /**
+     * @return mixed
+     */
     public function index()
     {
         $users = $this->users->paginate(15);
             return response()->json($users);
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function show($id)
     {
         $user =  $this->users->get($id);
             return response()->json($user);
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), $this->users->getCreateRules());
@@ -43,6 +58,11 @@ class UserController extends Controller
              return response()->json($user, 201);
     }
 
+    /**
+     * @param Request $request
+     * @param $id
+     * @return mixed
+     */
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(),  $this->users->getUpdateRules());
@@ -53,7 +73,11 @@ class UserController extends Controller
         if ($this->users->update($request->all(), 'id', $id))
             return response()->json($this->users->get($id));
     }
-    
+
+    /**
+     * @param $id
+     * @return mixed
+     */
     public function destroy($id)
     {
         if (!$this->users->isBookHolder($id)) {

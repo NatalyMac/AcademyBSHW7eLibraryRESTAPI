@@ -45,12 +45,18 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * @return array
+     */
     public static function getCreateRules()
     {
         $_this = new self;
         return $_this->createRules;
     }
 
+    /**
+     * @return array
+     */
     public static function getUpdateRules()
     {
         $_this = new self;
