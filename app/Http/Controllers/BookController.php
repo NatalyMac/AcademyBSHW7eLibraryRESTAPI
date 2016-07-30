@@ -29,8 +29,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = $this->books->paginate(10);
-        //$books = $this->books->all();
+       // $books = $this->books->paginate(10);
+        $books = $this->books->all();
         return response()->json($books);
     }
 

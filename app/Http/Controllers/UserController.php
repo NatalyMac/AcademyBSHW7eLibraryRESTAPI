@@ -29,8 +29,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = $this->users->paginate(10);
-       // $users = $this->users->all();
+       // $users = $this->users->paginate(10);
+        $users = $this->users->all();
             return response()->json($users);
     }
 

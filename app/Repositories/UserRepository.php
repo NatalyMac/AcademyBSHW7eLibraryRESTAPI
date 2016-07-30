@@ -86,7 +86,7 @@ class UserRepository extends AbstractRepository
     public function isBookHolder($user_id)
     {
         $user = User::findorFail($user_id);
-        return $user->books()->wherePivot('date_getin_fact', null)->get();
+        return (!$user->books()->wherePivot('date_getin_fact', null)->get());
     }
 
     /**

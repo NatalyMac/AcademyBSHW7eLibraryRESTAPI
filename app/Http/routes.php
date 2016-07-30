@@ -11,6 +11,7 @@
 |
 */
 
+Route::get('/', 'HomeController@index');
 
 Route::resource('api/users', 'UserController');
 Route::resource('api/books', 'BookController');
