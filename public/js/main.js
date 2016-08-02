@@ -14,12 +14,9 @@
 
         var book = new eLibrary.Models.Book();
         var books = new eLibrary.Collections.Books({model:book});
-
         books.fetch();
 
         router = new eLibrary.Router();
-
-      //  Backbone.history.start();
 
         router.on('route:home', function() {
             router.navigate('', {
@@ -61,9 +58,11 @@
             $('.main-container').html(newUserForm.render().$el);
         });
 
+
         router.on('route:editUser', function(id) {
             var user = users.get(id),
                 editUserForm;
+
 
             if (user) {
                 editUserForm = new eLibrary.Views.UserForm({
@@ -96,24 +95,24 @@
 
 
         router.on('route:userDetail', function(id) {
-
-            var user = users.get(id);
-            user.books.fetch({reset: true});
-
-            console.log('book');
-            console.log(user.books);
+            var user = users.get(id),
+                detailUserForm;
             
-            var userViewDetail = new eLibrary.Views.UserDetail({
-                model: user
-            });
+            if (user) {
+                detailUserForm = new eLibrary.Views.UserDetail({
+                    model: user
+                });
 
-            var viewBooks = new eLibrary.Views.Books({
-                collection: user.books
-            });
+                console.log(user);
+                console.log(user.books);
 
-            console.log(userViewDetail);
-            $('.main-container').html(userViewDetail.render().$el);
-            //$('.main-container').html(viewBooks.render().$el);
+               // detailUserForm.render();
+
+                $('.main-container').html(detailUserForm.render().$el);
+
+            } else {
+                router.navigate('users', true);
+            }
         });
 
 

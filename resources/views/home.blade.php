@@ -61,20 +61,6 @@
                 </a>
                 </small>
             </td>
-            <td>
-                <small>
-                <a href="#users/<%- id %>/returnbook">
-                    <span class="glyphicon glyphicon-import"></span>
-                </a>
-                </small>
-            </td>
-            <td>
-                <small>
-                <a href="#users/<%- id %>/chargebook">
-                    <span class="glyphicon glyphicon-export"></span>
-                </a>
-                </small>
-            </td>
         </script>
 
 
@@ -207,21 +193,68 @@
         </form>
     </script>
 <!----------------------------------------------------------------------------------------->
-<script type="text/template" id="tpl-user-detail">
-    <div>
-            <div class="panel"><%- firstname %></div>
-            <div class="panel"><%- lastname %></div>
-            <div class="panel"><%- email %></div>
-            <div class="panel"><%- role %></div>
+    <script type="text/template" id="tpl-user-detail">
+        <h2 class="page-header text-center">Detail of user</h2>
+        <div>
+            <div class="panel"> <%- firstname %> </div>
+            <div class="panel"> <%- lastname %> </div>
+            <div class="panel"> <%- email %> </div>
+            <div class="panel"> <%- role %> </div>
 
-            <div><%- books %></div>
+            <table class="table table-hover table-striped table-bordered users-book-container">
+                <thead>
+                <tr>
+                    <td>Genre</td>
+                    <td>Title</td>
+                    <td>Author</td>
+                    <td>Year</td>
+                    <td>Action</td>
+                </tr>
+                </thead>
+            </table>
 
-        <div class="col-sm-3">
-            <a href="#users" class="btn btn-outline btn-lg btn-block">Cancel</a>
+            <p class="text-center">
+                <a href="#" class=" charge-book btn btn-lg btn-outline">Charge book</a>
+            </p>
+
+            <div class="col-sm-3">
+                <a href="#users" class="btn btn-outline btn-lg btn-block">Cancel</a>
+            </div>
         </div>
+    </script>
 
-    </div>
-</script>
+    <script type="text/template" id="tpl-user-books">
+        <td><%- genre %></td>
+        <td><%- title %></td>
+        <td><%- author %></td>
+        <td><%- year %></td>
+    <td>
+        <small>
+            <a href="#">
+            <span class="glyphicon glyphicon-import return-book"></span>
+            </a>
+        </small>
+    </td>
+    </script>
+
+    <script type="text/template" id="tpl-new-charge">
+        <form role="form" class="form-horizontal contract-form">
+
+            <div class="form-group">
+                <label class="control-label col-sm-2"  for="book">Select a Book:</label>
+                <select class =" select-book user-book-input" id="book" name ="book">
+
+                </select>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-4 col-sm-3">
+                    <button type="submit" class="btn btn-outline btn-lg btn-block">Submit</button>
+                </div>
+            </div>
+        </form>
+    </script>
+
 
     </div>
 </div>

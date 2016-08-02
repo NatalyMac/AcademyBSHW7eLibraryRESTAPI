@@ -79,6 +79,8 @@
     <script src = "js/views/book.js"></script>
     <script src = "js/views/users.js"></script>
     <script src = "js/views/books.js"></script>
+    <script src = "js/views/userbooks.js"></script>
+    <script src = "js/views/chargeBookForm.js"></script>
     <script src = "js/router.js"></script>
 
     <script>

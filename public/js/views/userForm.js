@@ -1,5 +1,6 @@
 eLibrary.Views.UserForm = Backbone.View.extend({
 
+    
     template: _.template($ ('#tpl-new-contact').html() ),
 
     events: {
@@ -7,9 +8,12 @@ eLibrary.Views.UserForm = Backbone.View.extend({
     },
 
     render: function() {
+        console.log(this.model.toJSON());
+       
         var html = this.template(_.extend(this.model.toJSON(), {
             isNew: this.model.isNew()
         }));
+
         this.$el.append(html);
         return this;
     },
