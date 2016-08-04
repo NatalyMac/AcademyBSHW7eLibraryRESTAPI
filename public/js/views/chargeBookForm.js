@@ -10,12 +10,6 @@ eLibrary.Views.ChargeBookForm = Backbone.View.extend({
 
         var html = this.template(this.model.toJSON());
         this.$el.append(html);
-        
-        var books = new eLibrary.Collections.Books();
-
-        books.fetch();
-        //TODO collection is empty???
-
         books.each(this.renderOneBook, this);
         return this;
     },
@@ -24,13 +18,15 @@ eLibrary.Views.ChargeBookForm = Backbone.View.extend({
         e.preventDefault();
 
         this.trigger('form:submitted', {
-            book_id: this.$('.book-id-input').val()
+            id: this.$('.user-book-input').val()
+            //TODO
         });
     },
 
     renderOneBook: function(book) {
         console.log('select');
-        var itemView = new eLibrary.Views.UserBooks({model: book, tagName: 'option value='});
+        var itemView = new eLibrary.Views.UserBook({model: book, tagName: 'option'});
+        console.log(book);
         this.$('.select-book').append(itemView.render().$el);
     }
 

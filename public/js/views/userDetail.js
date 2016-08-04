@@ -17,11 +17,12 @@ eLibrary.Views.UserDetail = Backbone.View.extend({
         e.preventDefault();
 
         var chargeView = new eLibrary.Views.ChargeBookForm({model: this.model});
-       
-        this.$el.append(chargeView.render().$el);
+        //this.$el.append(chargeView.render().$el);
+        $('.charge-container').html(chargeView.render().$el);
 
         chargeView.on('form:submitted', function (attrs) {
             console.log('test');
+            console.log(attrs);
             //TODO rest request
             chargeView.remove();
         });
@@ -33,18 +34,11 @@ eLibrary.Views.UserDetail = Backbone.View.extend({
 
         this.$el.append(html);
 
-        this.model.books.fetch();
-        console.log(this.model.books);
-
-        this.model.books.each(this.renderOneBook, this);
-
-        return this;
-    },
-
-
-    renderOneBook: function(book) {
-        var itemView = new eLibrary.Views.UserBooks({model: book});
-        this.$('.users-book-container').append(itemView.render().$el);
+        this.model.books.fetch().then(function(books){
+            var collbooks = new eLibrary.Collections.Books(new eLibrary.Models.Book);
+            collbooks.set(books);
+            var userBooksView = new eLibrary.Views.UserBooks({collection : collbooks});
+            $('.detail-container').html(userBooksView.render().$el);
+        });return this;
     }
-
 });

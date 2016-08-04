@@ -119,6 +119,7 @@
         <p class="text-center">
             <a href="#books/new" class="btn btn-lg btn-outline">Add Book</a>
         </p>
+
         <table class="table table-hover table-striped table-bordered books-container">
             <thead>
             <tr>
@@ -193,6 +194,7 @@
         </form>
     </script>
 <!----------------------------------------------------------------------------------------->
+
     <script type="text/template" id="tpl-user-detail">
         <h2 class="page-header text-center">Detail of user</h2>
         <div>
@@ -200,30 +202,37 @@
             <div class="panel"> <%- lastname %> </div>
             <div class="panel"> <%- email %> </div>
             <div class="panel"> <%- role %> </div>
-
-            <table class="table table-hover table-striped table-bordered users-book-container">
-                <thead>
-                <tr>
-                    <td>Genre</td>
-                    <td>Title</td>
-                    <td>Author</td>
-                    <td>Year</td>
-                    <td>Action</td>
-                </tr>
-                </thead>
-            </table>
+            <div class ="detail-container"></div>
 
             <p class="text-center">
                 <a href="#" class=" charge-book btn btn-lg btn-outline">Charge book</a>
             </p>
 
+
+            <div class = "charge-container"></div>
+
             <div class="col-sm-3">
                 <a href="#users" class="btn btn-outline btn-lg btn-block">Cancel</a>
             </div>
+
         </div>
     </script>
+    <script type="text/template" id="tpl-users-books">
+        <h2>List of Books</h2>
+        <table class="table table-hover table-striped table-bordered users-book-container">
+            <thead>
+                <tr>
+                <td>Genre</td>
+                <td>Title</td>
+                <td>Author</td>
+                <td>Year</td>
+                <td>Action</td>
+                </tr>
+            </thead>
+        </table>
+    </script>
 
-    <script type="text/template" id="tpl-user-books">
+    <script type="text/template" id="tpl-user-book">
         <td><%- genre %></td>
         <td><%- title %></td>
         <td><%- author %></td>
@@ -242,9 +251,11 @@
 
             <div class="form-group">
                 <label class="control-label col-sm-2"  for="book">Select a Book:</label>
-                <select class =" select-book user-book-input" id="book" name ="book">
+            <select class =" select-book user-book-input" id="book" name ="book">
 
-                </select>
+                <option></option>
+            </select>
+
             </div>
 
             <div class="form-group">

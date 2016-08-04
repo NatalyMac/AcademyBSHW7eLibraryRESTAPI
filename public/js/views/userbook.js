@@ -1,29 +1,29 @@
-eLibrary.Views.User = Backbone.View.extend({
+eLibrary.Views.UserBook = Backbone.View.extend({
     tagName: 'tr',
-    template: _.template($('#tpl-contact').html()),
+    template: _.template($('#tpl-user-book').html()),
 
     events: {
-        'click .delete-user': 'onClickDelete'
+        'click .return-book': 'onClickReturn',
     },
 
     initialize: function() {
         this.listenTo(this.model, 'remove', this.remove);
     },
-
+    
     render: function() {
         var html = this.template(this.model.toJSON());
         this.$el.append(html);
         return this;
     },
 
-    onClickDelete: function(e) {
+    onClickReturn: function(e) {
         e.preventDefault();
-
+        var user_id = this.model.attributes.pivot.user_id;
+        this.model.urlRoot = 'index.php/api/users/' + user_id + '/books';
         this.model.collection.remove(this.model);
-
         if (this.model.destroy()){
-            alert('Deleted succesfully');
+            alert('Returned succesfully');
         }
-
     }
 });
+

@@ -1,194 +1,41 @@
-(function()
-{
+//(function()
+//{
     window.eLibrary =
   {
     Models: {},
     Collections: {},
     Views: {},
+    Router: {},
+    Controllers :{},
+
 
     start: function()
     {
-        var user = new eLibrary.Models.User();
-        var users = new eLibrary.Collections.Users({model:user});
+
+        Backbone.View.prototype.close = function () {
+            console.log('Closing view ' + this);
+            if (this.beforeClose) {
+                this.beforeClose();
+            }
+            this.remove();
+            this.unbind();
+        };
+
+
+        user = new eLibrary.Models.User();
+        users = new eLibrary.Collections.Users({model:user});
         users.fetch();
 
-        var book = new eLibrary.Models.Book();
-        var books = new eLibrary.Collections.Books({model:book});
+        book = new eLibrary.Models.Book();
+        books = new eLibrary.Collections.Books({model:book});
         books.fetch();
-
+        
         router = new eLibrary.Router();
-
-        router.on('route:home', function() {
-            router.navigate('', {
-                trigger: true,
-                replace: true
-            });
-        });
-
-        router.on('route:showUsers', function() {
-            var usersView = new eLibrary.Views.Users({
-                collection: users
-            });
-            usersView.render();
-            $('.main-container').html(usersView.render().$el);
-        });
-
-        router.on('route:newUser', function() {
-            var newUserForm = new eLibrary.Views.UserForm({
-                model: new eLibrary.Models.User()
-            });
-
-            newUserForm.on('form:submitted', function(attrs) {
-                console.log(attrs);
-
-                var user = new eLibrary.Models.User();
-                user.set(attrs);
-
-                if (user.isValid()) {
-                    users.create(attrs);
-                    alert('Added succesfully');
-                    router.navigate('users', true);
-
-                }else{
-                    alert(user.validationError);
-
-                }
-            });
-
-            $('.main-container').html(newUserForm.render().$el);
-        });
-
-
-        router.on('route:editUser', function(id) {
-            var user = users.get(id),
-                editUserForm;
-
-
-            if (user) {
-                editUserForm = new eLibrary.Views.UserForm({
-                    model: user
-                });
-
-                editUserForm.on('form:submitted', function(attrs) {
-
-                    user.set(attrs);
-
-                    if (user.isValid()) {
-
-                        user.save();
-
-                        alert('Edit succesfully');
-
-                        router.navigate('users', true);
-
-                    }else {
-                        alert(user.validationError);
-                    }
-
-                });
-
-                $('.main-container').html(editUserForm.render().$el);
-            } else {
-                router.navigate('users', true);
-            }
-        });
-
-
-        router.on('route:userDetail', function(id) {
-            var user = users.get(id),
-                detailUserForm;
-            
-            if (user) {
-                detailUserForm = new eLibrary.Views.UserDetail({
-                    model: user
-                });
-
-                console.log(user);
-                console.log(user.books);
-
-               // detailUserForm.render();
-
-                $('.main-container').html(detailUserForm.render().$el);
-
-            } else {
-                router.navigate('users', true);
-            }
-        });
-
-
-        /*************************************************************************************/
-
-        router.on('route:showBooks', function() {
-            var booksView = new eLibrary.Views.Books({
-                collection: books
-            });
-            console.log('show');
-            booksView.render();
-            $('.main-container').html(booksView.render().$el);
-        });
-
-        router.on('route:newBook', function() {
-            var newBookForm = new eLibrary.Views.BookForm({
-                model: new eLibrary.Models.Book()
-            });
-
-            newBookForm.on('form:submitted', function(attrs) {
-                console.log(attrs);
-
-                var book = new eLibrary.Models.Book();
-                book.set(attrs);
-
-                if (book.isValid()) {
-                    books.create(attrs);
-                    alert('Added succesfully');
-                    router.navigate('books', true);
-
-                }else{
-                    alert(book.validationError);
-
-                }
-            });
-
-            $('.main-container').html(newBookForm.render().$el);
-        });
-
-        router.on('route:editBook', function(id) {
-            var book = books.get(id),
-                editBookForm;
-
-            if (book) {
-                editBookForm = new eLibrary.Views.BookForm({
-                    model: book
-                });
-
-                editBookForm.on('form:submitted', function(attrs) {
-
-                    book.set(attrs);
-
-                    if (book.isValid()) {
-
-                        book.save();
-
-                        alert('Edit succesfully');
-
-                        router.navigate('users', true);
-
-                    }else {
-                        alert(book.validationError);
-                    }
-
-                });
-
-                $('.main-container').html(editBookForm.render().$el);
-            } else {
-                router.navigate('books', true);
-            }
-        });
 
         Backbone.history.start();
     }
-  };
-}());
+}
+//());
 
 
 

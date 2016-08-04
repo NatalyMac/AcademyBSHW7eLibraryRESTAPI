@@ -1,30 +1,22 @@
 eLibrary.Views.UserBooks = Backbone.View.extend({
-    tagName: 'tr',
-    template: _.template($('#tpl-user-books').html()),
 
-    events: {
-        'click .return-book': 'onClickReturn'
-    },
+    template: _.template($('#tpl-users-books').html()),
 
     initialize: function() {
-        this.listenTo(this.model, 'remove', this.remove);
+        this.collection.on('add', this.renderOne, this );
+    },
+
+    renderOne: function(book) {
+        var itemView = new eLibrary.Views.UserBook({model: book});
+        console.log('one');
+        this.$('.users-book-container').append(itemView.render().$el);
     },
 
     render: function() {
-        var html = this.template(this.model.toJSON());
-        this.$el.append(html);
-        // TODO this view works after second push button ????
+        var html = this.template();
+        this.$el.html(html);
+        this.collection.each(this.renderOne, this);
         return this;
-    },
-
-    onClickReturn: function(e) {
-        e.preventDefault();
-        var user_id = this.model.attributes.pivot.user_id;
-        this.model.urlRoot = 'index.php/api/users/' + user_id + '/books';
-        this.model.collection.remove(this.model);
-        if (this.model.destroy()){
-            alert('Returned succesfully');
-        }
     }
 });
 
