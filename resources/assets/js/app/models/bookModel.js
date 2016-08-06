@@ -16,7 +16,7 @@ exports.Book = Backbone.Model.extend({
 
         var alpha = /[a-zA-zа-яА-Я]+/i;
         var number = /[0-9]+/i;
-        
+
         if (!($.trim(attrs.genre))){
             return 'The field is required';
         }

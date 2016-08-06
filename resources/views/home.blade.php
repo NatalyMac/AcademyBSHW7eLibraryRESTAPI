@@ -179,11 +179,11 @@
             <div class="col-sm-6">
                 <input type="text" class="form-control book-author-input" value="<%- author %>">
             </div>
-        </div>
-        <div class="form-group">
-            <label class="col-sm-4 control-label">Year:</label>
-            <div class="col-sm-6">
-                <input type="text" class="form-control user-year-input" value="<%- year %>">
+            <div class="form-group">
+                <label class="col-sm-4 control-label">Year:</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control book-year-input" value="<%- year %>">
+                </div>
             </div>
         </div>
 
