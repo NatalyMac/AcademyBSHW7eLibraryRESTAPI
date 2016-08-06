@@ -7,6 +7,7 @@ use Validator;
 
 use App\Http\Requests;
 use App\Repositories\BookRepository;
+use App\Jobs\SendReminderEmail;
 
 
 class BookController extends Controller
@@ -56,6 +57,9 @@ class BookController extends Controller
             return response()->json($validator->messages(), 406);
 
         $book = $this->books->add($request->all());
+        
+        $this->dispatch(new SendReminderEmail());
+        
             return response()->json($book, 201);
     }
 
