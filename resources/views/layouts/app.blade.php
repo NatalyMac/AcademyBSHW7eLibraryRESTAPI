@@ -62,10 +62,37 @@
     @yield('content')
 
     <!-- JavaScripts -->
-    <script src = "../resources/assets/js/vendor/jquery.js"></script>
-    <script src = "../resources/assets/js/vendor/underscore.js"></script>
-    <script src = "../resources/assets/js/vendor/backbone.js"></script>
-    <script src = "js/bundle.js"></script>
+    <script src = "js/vendor/jquery.js"></script>
+    <script src = "js/vendor/underscore.js"></script>
+    <script src = "js/vendor/backbone.js"></script>
+    <script src = "js/vendor/backbone.marionette.js"></script>
+
+    <script src = "js/main.js"></script>
+    <script src = "js/models/user.js"></script>
+    <script src = "js/models/book.js"></script>
+    <script src = "js/collections/users.js"></script>
+    <script src = "js/collections/books.js"></script>
+    <script src = "js/views/userForm.js"></script>
+    <script src = "js/views/userDetail.js"></script>
+    <script src = "js/views/bookForm.js"></script>
+    <script src = "js/views/user.js"></script>
+    <script src = "js/views/book.js"></script>
+    <script src = "js/views/users.js"></script>
+    <script src = "js/views/books.js"></script>
+    <script src = "js/views/userbook.js"></script>
+    <script src = "js/views/userbooks.js"></script>
+    <script src = "js/views/chargeBookForm.js"></script>t>
+    <script src = "js/controllers/users.js"></script>t>
+    <script src = "js/controllers/books.js"></script>t>
+    <script src = "js/router.js"></script>
+
+    <script>
+        $(function() {
+            eLibrary.start({
+            });
+        });
+    </script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}

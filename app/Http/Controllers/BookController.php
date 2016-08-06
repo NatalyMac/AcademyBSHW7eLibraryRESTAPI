@@ -58,8 +58,6 @@ class BookController extends Controller
 
         $book = $this->books->add($request->all());
         
-        $this->dispatch(new SendReminderEmail());
-        
             return response()->json($book, 201);
     }
 
