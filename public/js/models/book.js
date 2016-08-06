@@ -29,7 +29,7 @@ eLibrary.Models.Book = Backbone.Model.extend({
             return 'The field is required';
         }
 
-        if (!alpha.test(attrs.gerne) || !alpha.test(attrs.author)) {
+        if (!alpha.test(attrs.genre) || !alpha.test(attrs.author)) {
             return "Should be only alpha";
         }
 
